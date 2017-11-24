@@ -7,4 +7,5 @@
 ## 使うライブラリ、データベースなど
 - Tweepy(Twitterライブラリ)
 - TensorFlow(機械学習ライブラリ)
+- OpenCV(顔検出)
 - PostgreSQL(データベース)
