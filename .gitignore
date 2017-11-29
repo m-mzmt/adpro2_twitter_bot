@@ -2,3 +2,4 @@ APIKey
 *.jpg
 temp*
 sample*
+__pycache__
