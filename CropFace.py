@@ -15,8 +15,8 @@ def Crop_Face(img):
     face_images = cascade.detectMultiScale(
         image,
         scaleFactor=1.1,
-        minNeighbors=4,
-        minSize=(50, 50)
+        minNeighbors=2,
+        minSize=(30, 30)
         )
 
     print(face_images)
@@ -28,4 +28,5 @@ def Crop_Face(img):
             print(output_file)
 
     else:
-        print("猫は写ってないみたいだにゃー\n")
+        print("猫は写ってないみたいだにゃー(ΦωΦ)\n")
+        return False
