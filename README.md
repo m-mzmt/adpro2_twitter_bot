@@ -9,3 +9,4 @@
 - OpenCV(顔検出)
 - TensorFlow or chainer(機械学習ライブラリ)
 - PostgreSQL(データベース)
+- Tweepy(Twitterライブラリ)
