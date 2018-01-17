@@ -17,6 +17,7 @@ def crop_face(img):
     if len(face_images) > 0:
         for i, (x, y, w, h) in enumerate(face_images):
             face_image = image[y:y + h, x:x + w]
+            cv2.imwrite('/tmp/cat_face_orig_' + str(i) + '.jpg', face_image)
             face_image = cv2.resize(face_image, (64, 64))
             cv2.imwrite("/tmp/cat_face_64x64_" + str(i) + ".jpg", face_image)
         return len(face_images)

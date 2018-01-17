@@ -38,7 +38,6 @@ class Listener(tweepy.StreamListener):
         # リプライが来た場合
         if str(status.in_reply_to_screen_name) == bot_user_name:
             # テキストメッセージ
-            username_text = "@" + str(status.user.screen_name) + " "
             # タイムラインを取得
             time_line = api.mentions_timeline()
             # タイムラインの先頭のメッセージ内容
@@ -48,9 +47,11 @@ class Listener(tweepy.StreamListener):
             # 1.リプライ画像の保存 -> 2.顔を切り取りcat.jpgで保存 -> 3.chainerに通して判定
 
             # 1.リプライ画像の保存
+
             reply_images = image_save(time_line[0])
             if len(reply_images) == 0:
-                reply(api, 'Error:画像がありませんฅ(´・ω・｀)ฅにゃーん', status)
+                reply(api=api, tweet_text='Error:画像がありませんฅ(´・ω・｀)ฅにゃーん', status=status)
+                return True
 
             # 2.顔を切り取りcat.jpgで保存
             # TODO: 複数枚の画像に対応、複数匹写ってた場合の処理
@@ -58,6 +59,7 @@ class Listener(tweepy.StreamListener):
             # 1枚ずつ処理してく
             for i, image in enumerate(reply_images):
                 result = crop_face(image)
+                print(str(i+1) + "枚目: " + str(result) + "匹検出")
                 if result > 0:
                     # 学習処理
                     for j in range(result):
@@ -66,10 +68,13 @@ class Listener(tweepy.StreamListener):
                         cats_name = classifier(np.array(np.asarray(img)))
 
                         # 複数匹処理
-                        for cat_name in cats_name:
-                            tweet_result(cat_name.argmax(), api, status)
+                        # TODO: リプライに添付するクロップ画像のファイルパス修正
+                        tweet_result(name=cats_name.argmax(), api=api, status=status)
+                else:
+                    reply(api=api, tweet_text="Error:猫の顔が検出できませんでした...ฅ(´・ω・｀)ฅにゃーん", status=status)
+                    return True
 
-        return True
+            return True
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -81,7 +86,7 @@ class Listener(tweepy.StreamListener):
 
     def on_timeout(self):
         print('Timeout...')
-        return True
+        return False
 
 
 if __name__ == '__main__':

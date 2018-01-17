@@ -14,24 +14,26 @@ def image_save(timeline):
     reply_images = []
     image_save_dir = './image/raw/'
 
-    for i, img in enumerate(timeline.extended_entities['media']):
-        reply_image = urllib.request.urlopen(img['media_url'])
-        # ファイル名を確定後、リストに格納
-        image_name = date_name + \
-            str(timeline.id) + '-' + str(i) + '.jpg'
-        reply_images.append(image_save_dir + image_name)
-        # 画像を読み込んで保存
-        image_file = open(image_save_dir + image_name, 'wb')
-        image_file.write(reply_image.read())
-        image_file.close()
-        reply_image.close()
-        print('画像 ' + image_name + ' を保存しました')
+    try:
+        for i, img in enumerate(timeline.extended_entities['media']):
+            reply_image = urllib.request.urlopen(img['media_url'])
+            # ファイル名を確定後、リストに格納
+            image_name = date_name + \
+                str(timeline.id) + '-' + str(i) + '.jpg'
+            reply_images.append(image_save_dir + image_name)
+            # 画像を読み込んで保存
+            image_file = open(image_save_dir + image_name, 'wb')
+            image_file.write(reply_image.read())
+            image_file.close()
+            reply_image.close()
+            print('画像 ' + image_name + ' を保存しました')
 
-    return reply_images
-
+        return reply_images
+    except AttributeError:
+        return []
 
 def reply(tweet_text, api, status):
-    api.update_status(status=status.user.screen_name + tweet_text, in_reply_to_status_id=status.id)
+    api.update_status(status=status.user.screen_name + " " + tweet_text, in_reply_to_status_id=status.id)
     print(tweet_text)
 
 
