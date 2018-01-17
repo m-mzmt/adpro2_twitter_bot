@@ -49,7 +49,7 @@ def build_model(in_shape):
 def model_train(X, y):
     model = build_model(X.shape[1:])
     model.fit(X, y, batch_size=32, nb_epoch=30)
-    # モデルを保存する --- (※4)
+    # モデルを保存する
     hdf5_file = 'cat.hdf5'
     model.save_weights(hdf5_file)
     return model

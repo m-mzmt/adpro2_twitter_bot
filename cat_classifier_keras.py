@@ -11,12 +11,13 @@ def classifier(np_img):
     model = learn.build_model(img_array.shape[1:])
     model.load_weights("cat.hdf5")
 
-    # データを予測 --- (※4)
 
-    pre = model.predict(img_array)
-    print(pre)
+    predict = model.predict(img_array)
 
-    return pre
+
+    print(predict)
+
+    return predict
 
 
 

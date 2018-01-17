@@ -50,7 +50,7 @@ class Listener(tweepy.StreamListener):
 
             reply_images = image_save(time_line[0])
             if len(reply_images) == 0:
-                reply(api=api, tweet_text='Error:画像がありませんฅ(´・ω・｀)ฅにゃーん', status=status)
+                reply(api=api, tweet_text='Keras: Error:画像がありませんฅ(´・ω・｀)ฅにゃーん', status=status)
                 return True
 
             # 2.顔を切り取りcat.jpgで保存
@@ -71,7 +71,7 @@ class Listener(tweepy.StreamListener):
                         # TODO: リプライに添付するクロップ画像のファイルパス修正
                         tweet_result(name=cats_name.argmax(), api=api, status=status)
                 else:
-                    reply(api=api, tweet_text="Error:猫の顔が検出できませんでした...ฅ(´・ω・｀)ฅにゃーん", status=status)
+                    reply(api=api, tweet_text="Keras: Error:猫の顔が検出できませんでした...ฅ(´・ω・｀)ฅにゃーん", status=status)
                     return True
 
             return True
